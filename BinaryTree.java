@@ -17,7 +17,7 @@ public class BinaryTree<K, V> {
 
 
 
-        return V;
+      //  return V;
 
     }
     //A method called remove that takes a K key as input and removes the associated <key,
@@ -28,7 +28,7 @@ public class BinaryTree<K, V> {
     public V remove(K key){
 
 
-        return V;
+      //  return V;
     }
     // A method called lookup that takes a K key as input and determines whether key appears
     //in the tree. The method should return the associated value if the tree contains key and
@@ -36,7 +36,7 @@ public class BinaryTree<K, V> {
 
     public V lookup(K key){
 
-        return V;
+    //    return V;
     }
 
     //A method called inOrderTraverse that, when called on the root, prints all <key,
