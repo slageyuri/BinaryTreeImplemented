@@ -1,4 +1,11 @@
 public class BinaryTree<K, V> {
+        private Node<K, V> root;
+
+    BinaryTree(){
+    }
+    Node<K, V> getRoot(){
+        return root;
+    }
 
     // method called add that takes a K key and an V value as input and inserts the <key,
     //value> pair into the next available position in your tree. In order to find the next available
@@ -12,14 +19,46 @@ public class BinaryTree<K, V> {
     //value> pair already existing in the tree. If key was not already in tree, this method should
     //return null
 
-    public V add(K key, V value){
+    public V add(K key, V value) {
+        if (lookup(key) != null) return lookup(key);
+
+        else if (root == null) {
+            root = new Node<>(key, value);
+            return null;
+        } else {
+            Node<K,V> newnode = new Node<>(key, value);
+
+            Node<K, V> parent_node = getFreeNode(root);
+
+            if (parent_node.left == null) parent_node.left = newnode;
+            else parent_node.right = newnode;
+            return null;
+            //  return V;
+
+        }
+    }
+
+    public Node<K, V> getFreeNode(Node<K, V> node){
+
+        if(node == null){
+            return null;
+        }
+        else if(node.left== null) {
+            return node;
+        }
+        else if(node.right==null) {
+            return node;
+        }
+        else {
+            getFreeNode(node.left);
+            getFreeNode(node.right);
+            return node;
+        }
 
 
-
-
-      //  return V;
 
     }
+
     //A method called remove that takes a K key as input and removes the associated <key,
     //value> pair from the tree. The method should return the value if it successfully removed
     //key from the tree, and it should return null if it did not remove key from the tree (i.e., if
@@ -28,7 +67,7 @@ public class BinaryTree<K, V> {
     public V remove(K key){
 
 
-      //  return V;
+      return null;
     }
     // A method called lookup that takes a K key as input and determines whether key appears
     //in the tree. The method should return the associated value if the tree contains key and
@@ -36,7 +75,7 @@ public class BinaryTree<K, V> {
 
     public V lookup(K key){
 
-    //    return V;
+        return null;
     }
 
     //A method called inOrderTraverse that, when called on the root, prints all <key,
