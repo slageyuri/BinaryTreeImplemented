@@ -8,7 +8,7 @@ public class Main {
         binaryTree.add(4, "4");
         binaryTree.add(5, "5");
         binaryTree.add(6, "6");
-       System.out.println( binaryTree.add(3, "3"));
+        binaryTree.inOrderTraverse(binaryTree.getRoot());
 
     }
 }

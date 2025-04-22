@@ -26,33 +26,31 @@ public class BinaryTree<K, V> {
             root = new Node<>(key, value);
             return null;
         } else {
-            Node<K,V> newnode = new Node<>(key, value);
+            getFreeNode(root, key, value);
 
-            Node<K, V> parent_node = getFreeNode(root);
-
-            if (parent_node.left == null) parent_node.left = newnode;
-            else parent_node.right = newnode;
             return null;
             //  return V;
 
         }
     }
 
-    public Node<K, V> getFreeNode(Node<K, V> node){
-
-        if(node == null){
-            return null;
+    public void  getFreeNode(Node<K, V> node, K key, V value){
+        Node<K,V> newnode = new Node<>(key, value);
+        lookup(key);
+        if(node == null ){
+            return;
         }
         else if(node.left== null) {
-            return node;
+            node.left= newnode;
+            return;
         }
         else if(node.right==null) {
-            return node;
+            node.right = newnode;
+            return;
         }
         else {
-            getFreeNode(node.left);
-            getFreeNode(node.right);
-            return node;
+            getFreeNode(node.left, key, value);
+            getFreeNode(node.right, key, value);
         }
 
 
@@ -83,7 +81,22 @@ public class BinaryTree<K, V> {
     //in the format (key, value). This method should have no input parameters and should
     //not return anything.
 
-    public void inOrderTraverse(){
-        
+    public void inOrderTraverse(Node<K, V> node){
+        if(node == null) return;
+
+        else if(node.left==null && node.right == null){
+            System.out.println(node.key + " " + node.value + " FINAL");
+            return;
+        }
+        else{
+
+            inOrderTraverse(node.left);
+            System.out.println(node.key + " " + node.value);
+
+
+            inOrderTraverse(node.right);
+
+
+        }
     }
 }
