@@ -8,6 +8,13 @@ public class Main {
         binaryTree.add( 4,  "4");
         binaryTree.add(5,"5");
         binaryTree.add(6, "6");
+        binaryTree.add(7, "7");
+        binaryTree.add(8, "8");
+        binaryTree.add(9, "9");
+        binaryTree.add(10, "10");
+        binaryTree.add(11, "11");
+        binaryTree.add(12, "12");
+        binaryTree.add(13, "13");
         System.out.println(binaryTree.lookup(2));
         binaryTree.inOrderTraverse(binaryTree.getRoot());
 

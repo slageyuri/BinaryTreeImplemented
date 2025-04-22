@@ -51,8 +51,17 @@ public class BinaryTree<K, V> {
                 return;
             }
             else {
-                getFreeNode(node.left, key, value);
-                getFreeNode(node.right, key, value);
+                if(node.left.left== null || node.left.right == null) {
+                    getFreeNode(node.left, key, value);
+                }
+                else if(node.right.left ==null || node.right.right==null){
+                    getFreeNode(node.right, key, value);
+                }
+                else{
+
+
+                }
+
             }
 
 
