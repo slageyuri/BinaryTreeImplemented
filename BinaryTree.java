@@ -19,50 +19,45 @@ public class BinaryTree<K, V> {
     //value> pair already existing in the tree. If key was not already in tree, this method should
     //return null
 
-    public V add(K key, V value) {
-        if (lookup(key) != null) return lookup(key);
 
-        else if (root == null) {
-            root = new Node<>(key, value);
-            return null;
-        } else {
-            Node<K, V> newnode = new Node<>(key, value);
-            Node<K,V> parent_node = getFreeNode(root, key, value);
+         public V add (K key, V value){
+            if (lookup(key) != null) return lookup(key);
 
-            if(parent_node.left==null){
-                parent_node.left=newnode;
-            }
-            else if(parent_node.right==null){
-                parent_node.right = newnode;
-            }
-            return null;
-            //  return V;
+            else if (root == null) {
+                root = new Node<>(key, value);
+                return null;
+            } else {
+                getFreeNode(root, key, value);
 
-        }
-    }
+                return null;
+                //  return V;
 
-    public Node<K, V>  getFreeNode(Node<K, V> node, K key, V value){
-
-
-        if (node.left == null) {
-            return node;
-
-        } else {
-            Node<K, V> leftnode = getFreeNode(node.left, key, value);
-            if (leftnode == null) return null;
-
-        }
-
-        if (node.right == null) {
-            return node;
-        } else {
-            Node<K, V> noderight = getFreeNode(node.right, key, value);
-            if (noderight == null) return null;
-            else{
-                return noderight;
             }
         }
 
+
+        public void  getFreeNode(Node<K, V> node, K key, V value){
+            Node<K,V> newnode = new Node<>(key, value);
+            lookup(key);
+            if(node == null ){
+                return;
+            }
+            else if(node.left== null) {
+                node.left= newnode;
+                return;
+            }
+            else if(node.right==null) {
+                node.right = newnode;
+                return;
+            }
+            else {
+                getFreeNode(node.left, key, value);
+                getFreeNode(node.right, key, value);
+            }
+
+
+
+        }
 //HOW SHOULD THE ORDER GO. AND HOW TO DO IT.
 
 
@@ -70,7 +65,7 @@ public class BinaryTree<K, V> {
 
 
 
-    }
+
 
     //A method called remove that takes a K key as input and removes the associated <key,
     //value> pair from the tree. The method should return the value if it successfully removed
