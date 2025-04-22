@@ -5,9 +5,10 @@ public class Main {
         binaryTree.add( 1,  "1");
         binaryTree.add(2,"2");
         binaryTree.add(3, "3");
-        binaryTree.add(4, "4");
-        binaryTree.add(5, "5");
+        binaryTree.add( 4,  "4");
+        binaryTree.add(5,"5");
         binaryTree.add(6, "6");
+        System.out.println(binaryTree.lookup(2));
         binaryTree.inOrderTraverse(binaryTree.getRoot());
 
     }

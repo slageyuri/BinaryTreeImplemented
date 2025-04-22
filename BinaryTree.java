@@ -26,32 +26,47 @@ public class BinaryTree<K, V> {
             root = new Node<>(key, value);
             return null;
         } else {
-            getFreeNode(root, key, value);
+            Node<K, V> newnode = new Node<>(key, value);
+            Node<K,V> parent_node = getFreeNode(root, key, value);
 
+            if(parent_node.left==null){
+                parent_node.left=newnode;
+            }
+            else if(parent_node.right==null){
+                parent_node.right = newnode;
+            }
             return null;
             //  return V;
 
         }
     }
 
-    public void  getFreeNode(Node<K, V> node, K key, V value){
-        Node<K,V> newnode = new Node<>(key, value);
-        lookup(key);
-        if(node == null ){
-            return;
+    public Node<K, V>  getFreeNode(Node<K, V> node, K key, V value){
+
+
+        if (node.left == null) {
+            return node;
+
+        } else {
+            Node<K, V> leftnode = getFreeNode(node.left, key, value);
+            if (leftnode == null) return null;
+
         }
-        else if(node.left== null) {
-            node.left= newnode;
-            return;
+
+        if (node.right == null) {
+            return node;
+        } else {
+            Node<K, V> noderight = getFreeNode(node.right, key, value);
+            if (noderight == null) return null;
+            else{
+                return noderight;
+            }
         }
-        else if(node.right==null) {
-            node.right = newnode;
-            return;
-        }
-        else {
-            getFreeNode(node.left, key, value);
-            getFreeNode(node.right, key, value);
-        }
+
+//HOW SHOULD THE ORDER GO. AND HOW TO DO IT.
+
+
+
 
 
 
@@ -63,19 +78,72 @@ public class BinaryTree<K, V> {
     //key was not in the tree).
 
     public V remove(K key){
-
-
+        Node<K, V> removenode = removeHelper(root, key);
+        V value;
+        if(removenode.left.key.equals(key)){
+            value = removenode.left.value;
+            removenode.left =null; //what happens to the children of the removed node.
+            return value;
+        }
+        else if(removenode.right.key.equals(key)){
+            value = removenode.right.value;
+            removenode.right=null;
+            return value;
+        }
       return null;
     }
+    public Node<K, V> removeHelper(Node<K,V> node, K key){
+        if (node == null) return null;
+        else if(node.left.key.equals(key) || node.right.key.equals(key)){
+            return node;
+        }
+
+        else {
+            Node<K, V> leftlookup =lookupHelper(node.left, key);
+            if(leftlookup!=null) return leftlookup; //if it isn't null, then it means that they found the node with the same key.
+            else{
+                return lookupHelper(node.right, key); //if it wasn't on the left, then it must be on the right, or there isn't a node
+                //with the same key.
+            }
+
+
+        }
+    }
+
+
+
     // A method called lookup that takes a K key as input and determines whether key appears
     //in the tree. The method should return the associated value if the tree contains key and
     //null otherwise
 
     public V lookup(K key){
+        Node<K, V> node = lookupHelper(root, key);
+        if(node==null) return null;
+        else return node.value;
 
-        return null;
+
     }
 
+
+
+
+    public Node<K, V> lookupHelper(Node<K,V> node,K key) {
+        if (node == null) return null;
+        else if(node.key.equals(key)){
+            return node;
+        }
+
+        else {
+            Node<K, V> leftlookup =lookupHelper(node.left, key);
+                if(leftlookup!=null) return leftlookup; //if it isn't null, then it means that they found the node with the same key.
+                else{
+                    return lookupHelper(node.right, key); //if it wasn't on the left, then it must be on the right, or there isn't a node
+                    //with the same key.
+                }
+
+
+        }
+    }
     //A method called inOrderTraverse that, when called on the root, prints all <key,
     //value> pairs in the tree via in-order traversal, with each pair appearing on a new line
     //in the format (key, value). This method should have no input parameters and should
@@ -89,14 +157,9 @@ public class BinaryTree<K, V> {
             return;
         }
         else{
-
             inOrderTraverse(node.left);
             System.out.println(node.key + " " + node.value);
-
-
             inOrderTraverse(node.right);
-
-
         }
     }
 }
