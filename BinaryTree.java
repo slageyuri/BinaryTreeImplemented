@@ -79,6 +79,7 @@ public class BinaryTree<K, V> {
     //key from the tree, and it should return null if it did not remove key from the tree (i.e., if
     //key was not in the tree).
 
+    //REMOVE NODE AND RECONNECT CHILDREN TO THE TREE
     public V remove(K key){
         Node<K, V> removenode = removeHelper(root, key);
         V value;
