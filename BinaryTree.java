@@ -27,38 +27,34 @@ public class BinaryTree<K, V> {
                 root = new Node<>(key, value);
                 return null;
             } else {
-                getFreeNode(root, key, value);
-
+                Node<K, V> parent = getFreeNode(root);
+                if(parent==null) return null;
+                Node<K, V> newnode = new Node<K, V>(key, value);
+                if(parent.left==null){
+                    parent.left = newnode;
+                }
+                else if(parent.right==null){
+                    parent.right=newnode; //ERRADO TA ERRADO TUDO ERRADO
+                }
                 return null;
                 //  return V;
 
             }
         }
 
+         //FAZER RETORNAR A  KEY, USANDO RECURSAO NA DIREITA E NA ESQUERDA, MAS RETORNANDO A MENOR KEY (O NODE SEMPRE VAI SER COLOCADO NA DE MENOR VALOR LIVRE
+        public Node<K, V> getFreeNode(Node<K, V> node){
 
-        public void  getFreeNode(Node<K, V> node, K key, V value){
-            Node<K,V> newnode = new Node<>(key, value);
-            lookup(key);
+
             if(node == null ){
-                return;
+                return null;
             }
-            else if(node.left== null) {
-                node.left= newnode;
-                return;
+            else if(node.left== null || node.right==null) {
+                return node;
             }
-            else if(node.right==null) {
-                node.right = newnode;
-                return;
-            }
+
             else {
-                if(node.left.left== null || node.left.right == null) {
-                    getFreeNode(node.left, key, value);
-                }
-                else if(node.right.left ==null || node.right.right==null){
-                    getFreeNode(node.right, key, value);
-                }
-                else{
-
+               return getFreeNode(node.left); // INORDER: LEFT - ROOT - RIGHT
 
                 }
 
@@ -66,7 +62,9 @@ public class BinaryTree<K, V> {
 
 
 
-        }
+
+
+
 //HOW SHOULD THE ORDER GO. AND HOW TO DO IT.
 
 
