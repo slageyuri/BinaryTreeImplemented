@@ -82,6 +82,19 @@ public class BinaryTree<K, V> {
     public V remove(K key){
         Node<K, V> parentnode = removeHelper(root, key);//PARENT NODE
         V value;
+        if(parentnode==null){
+            return null;
+        }
+        else if(parentnode.key==key){
+            //case you want to remove the root
+            Node<K,V> removenode = parentnode.right; //right child - will take the place of the root.
+            removenode.left=parentnode.left; //THE RIGHT CHILD WILL BECOME THE ROOT AND POINT TO ITS LEFT BROTHER
+            root= removenode;
+            root.right=null;
+            value= removenode.value;
+            return value;
+        }
+
         if(parentnode.left.key.equals(key)){
             Node<K,V> removenode = parentnode.left;
             value = removenode.value;
@@ -114,8 +127,12 @@ public class BinaryTree<K, V> {
     }
 
 
-    public Node<K, V> removeHelper(Node<K,V> node, K key){
+    public Node<K, V> removeHelper(Node<K,V> node, K key) {
         if (node == null) return null;
+        else if(node.key==key) return node;
+        else if(node.left==null && node.right==null) {
+            return null;
+        }
         else if(node.left.key.equals(key) || node.right.key.equals(key)){
             return node;
         }
@@ -127,8 +144,6 @@ public class BinaryTree<K, V> {
                 return removeHelper(node.right, key); //if it wasn't on the left, then it must be on the right, or there isn't a node
                 //with the same key.
             }
-
-
         }
     }
 

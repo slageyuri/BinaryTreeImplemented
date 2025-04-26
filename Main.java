@@ -15,7 +15,7 @@ public class Main {
         binaryTree.add(11, "11");
         binaryTree.add(12, "12");
         binaryTree.add(13, "13");
-        System.out.println(binaryTree.lookup(2));
+        System.out.println(binaryTree.remove(6)+ "valor");
         binaryTree.inOrderTraverse(binaryTree.getRoot());
 
     }
