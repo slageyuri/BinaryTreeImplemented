@@ -65,7 +65,6 @@ public class BinaryTree<K, V> {
 
 
 
-//HOW SHOULD THE ORDER GO. AND HOW TO DO IT.
 
 
 
@@ -81,20 +80,40 @@ public class BinaryTree<K, V> {
 
     //REMOVE NODE AND RECONNECT CHILDREN TO THE TREE
     public V remove(K key){
-        Node<K, V> removenode = removeHelper(root, key);
+        Node<K, V> parentnode = removeHelper(root, key);//PARENT NODE
         V value;
-        if(removenode.left.key.equals(key)){
-            value = removenode.left.value;
-            removenode.left =null; //what happens to the children of the removed node.
+        if(parentnode.left.key.equals(key)){
+            Node<K,V> removenode = parentnode.left;
+            value = removenode.value;
+            //THREE CASES:
+            //FIRST: THE NODE HAS NO CHILDREN
+            if(removenode.left ==null && removenode.right==null) {
+                parentnode.left = null;
+            }
+            //SECOND: THE NODE HAS ONE CHILDREN (ON THE LEFT) - SO THE CHILD NODE JUST TAKES REMOVENODE'S PLACE
+            else if( removenode.left!=null && removenode.right==null){
+                parentnode.left= removenode.left;
+            }
+            //THIRD: THE NODE HAS TWO CHILDREN (LEFT AND RIGHT) - SO THE RIGHT CHILDREN TAKES REMOVONDE'S PLACE AND STARTS TO POINT TO THE
+            // LEFT CHILDREN OF REMOVENODE
+            else{
+                 parentnode.left= removenode.right; //PARENTNODE POINTS TO THE RIGHT CHILD OF REMOVENODE
+                 removenode.right.left= removenode.left; //RIGHT CHILD OF REMOVENODE POINTS TO THE LEFT CHILD (SUBTREE) OF REMOVENODE
+            }
+
             return value;
         }
-        else if(removenode.right.key.equals(key)){
-            value = removenode.right.value;
-            removenode.right=null;
+        else if(parentnode.right.key.equals(key)){
+            Node<K,V> removenode = parentnode.right;
+            value = removenode.value;
+            //ONLY ONE CASE: THE RIGHT CHILD (TO BE REMOVED) HAS NO CHILDREN - SINCE INORDER TRAVERSAL, TREE WILL GROW ALWAYS TO THE LEFT
+            parentnode.right= null;
             return value;
         }
       return null;
     }
+
+
     public Node<K, V> removeHelper(Node<K,V> node, K key){
         if (node == null) return null;
         else if(node.left.key.equals(key) || node.right.key.equals(key)){
@@ -102,10 +121,10 @@ public class BinaryTree<K, V> {
         }
 
         else {
-            Node<K, V> leftlookup =lookupHelper(node.left, key);
-            if(leftlookup!=null) return leftlookup; //if it isn't null, then it means that they found the node with the same key.
+            Node<K, V> leftremove =removeHelper(node.left, key);
+            if(leftremove!=null) return leftremove; //if it isn't null, then it means that they found the node with the same key.
             else{
-                return lookupHelper(node.right, key); //if it wasn't on the left, then it must be on the right, or there isn't a node
+                return removeHelper(node.right, key); //if it wasn't on the left, then it must be on the right, or there isn't a node
                 //with the same key.
             }
 
