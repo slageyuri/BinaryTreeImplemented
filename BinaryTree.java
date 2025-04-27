@@ -3,7 +3,7 @@ public class BinaryTree<K, V> {
 
     BinaryTree(){
     }
-    Node<K, V> getRoot(){
+    private Node<K, V> getRoot(){
         return root;
     }
 
@@ -34,7 +34,7 @@ public class BinaryTree<K, V> {
                     parent.left = newnode;
                 }
                 else if(parent.right==null){
-                    parent.right=newnode; //ERRADO TA ERRADO TUDO ERRADO
+                    parent.right=newnode;
                 }
                 return null;
                 //  return V;
@@ -43,7 +43,7 @@ public class BinaryTree<K, V> {
         }
 
          //FAZER RETORNAR A  KEY, USANDO RECURSAO NA DIREITA E NA ESQUERDA, MAS RETORNANDO A MENOR KEY (O NODE SEMPRE VAI SER COLOCADO NA DE MENOR VALOR LIVRE
-        public Node<K, V> getFreeNode(Node<K, V> node){
+        private Node<K, V> getFreeNode(Node<K, V> node){
 
 
             if(node == null ){
@@ -127,7 +127,7 @@ public class BinaryTree<K, V> {
     }
 
 
-    public Node<K, V> removeHelper(Node<K,V> node, K key) {
+    private Node<K, V> removeHelper(Node<K,V> node, K key) {
         if (node == null) return null;
         else if(node.key==key) return node;
         else if(node.left==null && node.right==null) {
@@ -164,7 +164,7 @@ public class BinaryTree<K, V> {
 
 
 
-    public Node<K, V> lookupHelper(Node<K,V> node,K key) {
+    private Node<K, V> lookupHelper(Node<K,V> node,K key) {
         if (node == null) return null;
         else if(node.key.equals(key)){
             return node;
