@@ -3,7 +3,7 @@ public class BinaryTree<K, V> {
 
     BinaryTree(){
     }
-    private Node<K, V> getRoot(){
+    public Node<K, V> getRoot(){
         return root;
     }
 
@@ -29,7 +29,7 @@ public class BinaryTree<K, V> {
             } else {
                 Node<K, V> parent = getFreeNode(root);
                 if(parent==null) return null;
-                Node<K, V> newnode = new Node<K, V>(key, value);
+                Node<K, V> newnode = new Node<>(key, value);
                 if(parent.left==null){
                     parent.left = newnode;
                 }
@@ -37,12 +37,12 @@ public class BinaryTree<K, V> {
                     parent.right=newnode;
                 }
                 return null;
-                //  return V;
+
 
             }
         }
 
-         //FAZER RETORNAR A  KEY, USANDO RECURSAO NA DIREITA E NA ESQUERDA, MAS RETORNANDO A MENOR KEY (O NODE SEMPRE VAI SER COLOCADO NA DE MENOR VALOR LIVRE
+
         private Node<K, V> getFreeNode(Node<K, V> node){
 
 
@@ -50,11 +50,12 @@ public class BinaryTree<K, V> {
                 return null;
             }
             else if(node.left== null || node.right==null) {
-                return node;
+                return node; //Returns the parentnode that has a free space
             }
 
             else {
                return getFreeNode(node.left); // INORDER: LEFT - ROOT - RIGHT
+                //Recursive method that repeats the same algorithm on the left node, since we are in in-order traversal,  the trees must grow to the left first.
 
                 }
 
@@ -85,13 +86,22 @@ public class BinaryTree<K, V> {
         if(parentnode==null){
             return null;
         }
-        else if(parentnode.key==key){
-            //case you want to remove the root
-            Node<K,V> removenode = parentnode.right; //right child - will take the place of the root.
-            removenode.left=parentnode.left; //THE RIGHT CHILD WILL BECOME THE ROOT AND POINT TO ITS LEFT BROTHER
-            root= removenode;
-            root.right=null;
-            value= removenode.value;
+        else if(parentnode.key.equals(key)){
+            value =parentnode.value;
+            //case you want to remove the root: IF there's a right child and IF there isn't
+            if(parentnode.right!=null) { //IF THERE'S A RIGHT CHILD
+                Node<K, V> newroot = parentnode.right; //right child will take the place of the root.
+                newroot.left = parentnode.left; //THE RIGHT CHILD WILL BECOME THE ROOT AND POINT TO ITS LEFT BROTHER (now child)
+                root = newroot;
+                root.right = null;
+
+                return value;
+            }
+            else{//Only left child / No child if root is the only node. (root.left== null -> root=null);
+                root= root.left;
+
+            }
+
             return value;
         }
 
@@ -107,7 +117,7 @@ public class BinaryTree<K, V> {
             else if( removenode.left!=null && removenode.right==null){
                 parentnode.left= removenode.left;
             }
-            //THIRD: THE NODE HAS TWO CHILDREN (LEFT AND RIGHT) - SO THE RIGHT CHILDREN TAKES REMOVONDE'S PLACE AND STARTS TO POINT TO THE
+            //THIRD: THE NODE HAS TWO CHILDREN (LEFT AND RIGHT)  SO THE RIGHT CHILDREN TAKES REMOVENODE'S PLACE AND STARTS TO POINT TO THE
             // LEFT CHILDREN OF REMOVENODE
             else{
                  parentnode.left= removenode.right; //PARENTNODE POINTS TO THE RIGHT CHILD OF REMOVENODE
@@ -119,6 +129,7 @@ public class BinaryTree<K, V> {
         else if(parentnode.right.key.equals(key)){
             Node<K,V> removenode = parentnode.right;
             value = removenode.value;
+
             //ONLY ONE CASE: THE RIGHT CHILD (TO BE REMOVED) HAS NO CHILDREN - SINCE INORDER TRAVERSAL, TREE WILL GROW ALWAYS TO THE LEFT
             parentnode.right= null;
             return value;
@@ -129,11 +140,11 @@ public class BinaryTree<K, V> {
 
     private Node<K, V> removeHelper(Node<K,V> node, K key) {
         if (node == null) return null;
-        else if(node.key==key) return node;
+        else if(node.key.equals(key)) return node; //case for root
         else if(node.left==null && node.right==null) {
             return null;
         }
-        else if(node.left.key.equals(key) || node.right.key.equals(key)){
+        else if((node.left!=null && node.left.key.equals(key) || node.right!=null && node.right.key.equals(key))){
             return node;
         }
 
@@ -186,17 +197,18 @@ public class BinaryTree<K, V> {
     //in the format (key, value). This method should have no input parameters and should
     //not return anything.
 
+
     public void inOrderTraverse(Node<K, V> node){
         if(node == null) return;
 
         else if(node.left==null && node.right == null){
-            System.out.println(node.key + " " + node.value + " FINAL");
-            return;
+            System.out.println("(" + node.key + ", " + node.value + ")");
         }
         else{
             inOrderTraverse(node.left);
-            System.out.println(node.key + " " + node.value);
+            System.out.println("(" + node.key + ", " + node.value + ")");
             inOrderTraverse(node.right);
         }
     }
+
 }

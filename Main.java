@@ -1,8 +1,7 @@
 public class Main {
     public static void main(String[] args) {
         BinaryTree<Integer, String> binaryTree = new BinaryTree<>();
-
-        binaryTree.add( 1,  "1");
+        System.out.println(binaryTree.add(1, "1"));
         binaryTree.add(2,"2");
         binaryTree.add(3, "3");
         binaryTree.add( 4,  "4");
@@ -15,8 +14,23 @@ public class Main {
         binaryTree.add(11, "11");
         binaryTree.add(12, "12");
         binaryTree.add(13, "13");
-        System.out.println(binaryTree.remove(6)+ "valor");
+        binaryTree.remove(1);
+        binaryTree.add(1, "1");
+        binaryTree.remove(2);
+        binaryTree.add(2, "2");
+        binaryTree.remove(6);
+        binaryTree.remove(10);
+        binaryTree.remove(9);
+
+        System.out.println(binaryTree.remove(1));
+        binaryTree.add(1, "1");
+        binaryTree.add(14, "14");
+        binaryTree.add(15,"15");
+        binaryTree.remove(1);
+        binaryTree.remove(3);
+        System.out.println(binaryTree.lookup(8));
         binaryTree.inOrderTraverse(binaryTree.getRoot());
+
 
     }
 }
