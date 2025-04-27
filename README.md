@@ -15,4 +15,5 @@ remove: remove  value of the node associated the key passed as argument for the 
 lookup: returns the value associated with the node that has the key 
 passed as parameter.
 
-inOrderTraverse: 
+inOrderTraverse: prints every <key, value> pair on the list,
+following the inOrder traversal rules.
