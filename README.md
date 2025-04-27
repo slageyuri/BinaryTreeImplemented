@@ -8,7 +8,7 @@ the In-order Traversal Pattern.
 
 There are 4 main methods:
 
-add: Adds a node to next empty space (In order traversal, so the order is left-root-right)
+add: Adds a node to next empty space (In order traversal, so the order is left-root-right).
 
 remove: remove  value of the node associated the key passed as argument for the method.
 
